@@ -8,8 +8,3 @@ install:
 
 script: 
  - ./gradlew clean check
-
-cache:
-    directories:
-     - /Users/travis/.konan/
-     - /Users/travis/.gradle/wrapper/dists/gradle-6.6-bin
