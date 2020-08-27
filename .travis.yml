@@ -1,0 +1,10 @@
+language: java
+
+os: osx
+osx_image: xcode11.6
+
+install:
+ - echo "Overriding default Travis install step to avoid unnecessary './gradlew assemble'."
+
+script: 
+ - ./gradlew clean check
