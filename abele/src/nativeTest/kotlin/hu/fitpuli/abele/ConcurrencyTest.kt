@@ -1,6 +1,6 @@
 package hu.fitpuli.abele
 
-import hu.fitpuli.abele.trees.CountLogTree
+import hu.fitpuli.abele.trees.CountingLogTree
 import kotlin.native.concurrent.TransferMode
 import kotlin.native.concurrent.Worker
 import kotlin.test.AfterTest
@@ -21,7 +21,7 @@ class ConcurrencyTest {
 
     @Test
     fun checkLogCountIfLogsAreComingFromMultipleThreads() {
-        val countLogTree = CountLogTree(Abele.INFO)
+        val countLogTree = CountingLogTree(Abele.INFO)
         Abele.plant(countLogTree)
 
         val workers = Array(COUNT) { Worker.start() }
@@ -47,4 +47,3 @@ class ConcurrencyTest {
         const val LOG_RUNS = 100000
     }
 }
-

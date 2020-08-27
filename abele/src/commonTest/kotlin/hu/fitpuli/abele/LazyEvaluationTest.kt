@@ -1,7 +1,11 @@
 package hu.fitpuli.abele
 
 import hu.fitpuli.abele.trees.DummyTree
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class LazyEvaluationTest {
     @BeforeTest

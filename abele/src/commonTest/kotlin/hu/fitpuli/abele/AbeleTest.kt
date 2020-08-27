@@ -67,8 +67,10 @@ class AbeleTest {
     @Test
     fun checkIfUprootThrowsIfForestIsEmpty() {
         val tree = ListTree()
-        assertFailsWith(IllegalArgumentException::class,
-            "Cannot uproot tree which is not planted: $tree") {
+        assertFailsWith(
+            IllegalArgumentException::class,
+            "Cannot uproot tree which is not planted: $tree"
+        ) {
             Abele.uproot(tree)
         }
     }

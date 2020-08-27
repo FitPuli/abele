@@ -1,7 +1,6 @@
 package hu.fitpuli.abele.trees
 
 import hu.fitpuli.abele.Abele
-import hu.fitpuli.abele.trees.ConcurrentArray
 import hu.fitpuli.abele.Tree
 
 class ListTree(allowedLevel: Int = Abele.VERBOSE, allowedTags: Set<String> = setOf()) : Tree() {
