@@ -1,6 +1,5 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektPlugin
-import org.jetbrains.kotlin.konan.target.HostManager
 
 buildscript {
     repositories {
@@ -29,30 +28,30 @@ subprojects {
     apply<DetektPlugin>()
 
     detekt {
-        failFast = true // fail build on any finding
-        buildUponDefaultConfig = true // preconfigure defaults
+        failFast = true
+        buildUponDefaultConfig = true
         parallel = true
         autoCorrect = true
-        config = files("$rootDir/config/detekt/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+        config = rootProject.files("config/detekt/detekt.yml")
 
         reports {
-            html.enabled = true // observe findings in your browser with structure and code snippets
-            xml.enabled = true // checkstyle like format mainly for integrations like Jenkins
-            txt.enabled = true // similar to the console output, contains issue signature to manually edit baseline files
+            html.enabled = true
+            xml.enabled = true
+            txt.enabled = true
         }
 
         input.from(
             files(projectDir.resolve("src/commonMain/kotlin")),
+            files(projectDir.resolve("src/commonTest/kotlin")),
             files(projectDir.resolve("src/jvmMain/kotlin")),
-            files(projectDir.resolve("src/iosMain/kotlin"))
+            files(projectDir.resolve("src/jvmTest/kotlin")),
+            files(projectDir.resolve("src/nativeMain/kotlin")),
+            files(projectDir.resolve("src/nativeTest/kotlin"))
         )
     }
 
     tasks {
-        withType<Detekt> {
-            // Target version of the generated JVM bytecode. It is used for type resolution.
-            this.jvmTarget = "1.8"
-        }
+        withType<Detekt> { jvmTarget = "1.8" }
     }
 
     dependencies {
@@ -68,14 +67,6 @@ plugins {
 infra {
     publishing {
         include(":abele")
-
-//        bintray {
-//            organization = "kotlin"
-//            repository = "kotlinx"
-//            library = "kotlinx.datetime"
-//            username = findProperty("bintrayUser") as String?
-//            password = findProperty("bintrayApiKey") as String?
-//        }
 
         bintrayDev {
             publish = System.getProperty("idea.active") != "true"
