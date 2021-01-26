@@ -1,11 +1,11 @@
 plugins {
     id("kotlin-multiplatform")
     id("maven-publish")
-    id("org.jetbrains.dokka") version "1.4.0-rc"
+    id("org.jetbrains.dokka") version "1.4.20"
 }
 
 group = "hu.fitpuli"
-version = "0.1.0"
+version = "0.2.0"
 
 kotlin {
     infra {
@@ -55,19 +55,6 @@ kotlin {
         }
         val nativeTest by getting {
             dependsOn(commonTest)
-        }
-    }
-}
-
-tasks {
-    dokkaHtml {
-        dokkaSourceSets {
-            register("commonMain") {
-                displayName = "common"
-                platform = "common"
-                includeNonPublic = true
-                noStdlibLink = true
-            }
         }
     }
 }
