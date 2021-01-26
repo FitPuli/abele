@@ -55,13 +55,13 @@ subprojects {
     }
 
     dependencies {
-        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.12.0")
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.2")
     }
 }
 
 plugins {
     id("kotlinx.team.infra") version "0.2.0-dev-55"
-    id("io.gitlab.arturbosch.detekt") version "1.12.0"
+    id("io.gitlab.arturbosch.detekt") version "1.14.2"
 }
 
 infra {
