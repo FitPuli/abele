@@ -4,9 +4,7 @@ import io.gitlab.arturbosch.detekt.DetektPlugin
 buildscript {
     repositories {
         google()
-        jcenter()
         mavenCentral()
-        maven { setUrl("https://kotlin.bintray.com/kotlinx") }
     }
 
     val kotlinVersion: String by project
@@ -19,8 +17,8 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
-        maven { setUrl("https://kotlin.bintray.com/kotlinx") }
+        mavenCentral()
+        maven { setUrl("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven") }
     }
 }
 
@@ -55,30 +53,22 @@ subprojects {
     }
 
     dependencies {
-        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.12.0")
+        detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.14.2")
     }
 }
 
 plugins {
-    id("kotlinx.team.infra") version "0.2.0-dev-55"
-    id("io.gitlab.arturbosch.detekt") version "1.12.0"
-}
-
-infra {
-    publishing {
-        include(":abele")
-
-        bintrayDev {
-            publish = System.getProperty("idea.active") != "true"
-            organization = "fitpuli"
-            repository = "fitpuli.dev"
-            library = "abele"
-            username = (project.findProperty("bintray.user") as? String) ?: ""
-            password = (project.findProperty("bintray.pass") as? String) ?: ""
-        }
-    }
+    id("io.gitlab.arturbosch.detekt") version "1.14.2"
+    id("io.codearte.nexus-staging") version "0.30.0"
 }
 
 val clean by tasks.creating(Delete::class) {
     delete(rootProject.buildDir)
+}
+
+nexusStaging {
+    username = System.getenv("OSSRH_USERNAME")
+    password = System.getenv("OSSRH_PASSWORD")
+    serverUrl = "https://s01.oss.sonatype.org/service/local/"
+    packageGroup = "hu.fitpuli"
 }
