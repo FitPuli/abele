@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "hu.fitpuli"
-version = "0.2.1"
+version = "0.2.2"
 
 kotlin {
     ios()
@@ -55,6 +55,25 @@ kotlin {
     }
 }
 
+val javadocJar by tasks.registering(Jar::class) {
+    dependsOn(tasks.dokkaHtml)
+    archiveClassifier.set("javadoc")
+    from(tasks.dokkaHtml.get().outputDirectory)
+}
+
+tasks {
+    dokkaHtml {
+        dokkaSourceSets {
+            all { isEnabled = false }
+            named("commonMain") {
+                isEnabled = true
+                displayName.set("common")
+                platform.set(org.jetbrains.dokka.Platform.common)
+            }
+        }
+    }
+}
+
 // Stub secrets to let the project sync and build without the publication values set up
 ext["signing.keyId"] = null
 ext["signing.password"] = null
@@ -69,10 +88,6 @@ ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
 ext["signing.secretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
 ext["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
 ext["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
-
-val javadocJar by tasks.registering(Jar::class) {
-    archiveClassifier.set("javadoc")
-}
 
 fun getExtraString(name: String) = ext[name]?.toString()
 
@@ -109,20 +124,17 @@ publishing {
             }
             developers {
                 developer {
-                    id.set("fitpuli")
-                    name.set("Fitpuli")
-                    email.set("fitpuli@gmail.com")
+                    id.set(System.getenv("DEVELOPER_ID"))
+                    name.set(System.getenv("DEVELOPER_NAME"))
+                    email.set(System.getenv("DEVELOPER_EMAIL"))
                 }
             }
             scm {
                 url.set("https://github.com/FitPuli/abele.git")
             }
-
         }
     }
 }
-
-// Signing artifacts. Signing.* extra properties values will be used
 
 signing {
     sign(publishing.publications)

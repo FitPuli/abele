@@ -59,8 +59,16 @@ subprojects {
 
 plugins {
     id("io.gitlab.arturbosch.detekt") version "1.14.2"
+    id("io.codearte.nexus-staging") version "0.30.0"
 }
 
 val clean by tasks.creating(Delete::class) {
     delete(rootProject.buildDir)
+}
+
+nexusStaging {
+    username = System.getenv("OSSRH_USERNAME")
+    password = System.getenv("OSSRH_PASSWORD")
+    serverUrl = "https://s01.oss.sonatype.org/service/local/"
+    packageGroup = "hu.fitpuli"
 }
