@@ -1,12 +1,12 @@
 plugins {
     id("kotlin-multiplatform")
     id("maven-publish")
-    id("org.jetbrains.dokka") version "1.4.30"
+    id("org.jetbrains.dokka") version "1.7.0"
     id("signing")
 }
 
 group = "hu.fitpuli"
-version = "0.2.2"
+version = "0.4.0"
 
 kotlin {
     ios()
